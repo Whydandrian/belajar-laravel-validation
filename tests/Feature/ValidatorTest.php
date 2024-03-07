@@ -4,17 +4,44 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
+
+use function PHPUnit\Framework\assertNull;
 
 class ValidatorTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
+   public function testValidator()
+   {
+      $data = [
+         'username' => 'admin',
+         'password' => '12345'
+      ];
+      $rules = [
+         'username' => 'required',
+         'password' => 'required'
+      ];
 
-        $response->assertStatus(200);
-    }
+      $validator = Validator::make($data, $rules);
+      self::assertNotNull($validator);
+      self::assertTrue($validator->passes());
+      self::assertFalse($validator->fails());
+   }
+   
+   public function testValidatorInvalid()
+   {
+      $data = [
+         'username' => '',
+         'password' => ''
+      ];
+      $rules = [
+         'username' => 'required',
+         'password' => 'required'
+      ];
+
+      $validator = Validator::make($data, $rules);
+      self::assertNotNull($validator);
+      self::assertFalse($validator->passes());
+      self::assertTrue($validator->fails());
+   }
 }
