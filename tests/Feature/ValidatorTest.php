@@ -93,7 +93,7 @@ class ValidatorTest extends TestCase
    public function testValidatorValidData()
    {
       $data = [
-         'username' => 'wahyudi@whydandrian.id',
+         'username' => 'wah',
          'password' => 'rahasia',
          'admin' => true,
          'others' => false
