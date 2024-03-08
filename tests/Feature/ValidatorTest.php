@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Rules\Uppercase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\App;
@@ -192,6 +193,27 @@ class ValidatorTest extends TestCase
                ->add('password', 'Password tidak boleh sama dengan username');
          }
       });
+      self::assertNotNull($validator);
+
+      self::assertFalse($validator->passes());
+      self::assertTrue($validator->fails());
+
+      $message = $validator->getMessageBag();
+      Log::info($message->toJson(JSON_PRETTY_PRINT));
+   }
+
+   public function testValidatorCustomRule()
+   {
+      $data = [
+         'username' => 'admin@email.id',
+         'password' => 'admin@email.id'
+      ];
+      $rules = [
+         'username' => ['required', 'email', 'max:100', new Uppercase()],
+         'password' => ["required", "min:6", "max:20"]
+      ];
+
+      $validator = Validator::make($data, $rules);
       self::assertNotNull($validator);
 
       self::assertFalse($validator->passes());
