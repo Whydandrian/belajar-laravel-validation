@@ -12,8 +12,8 @@ class FormController extends Controller
    {
       try {
          $rules = [
-            'username' => 'wahyudi',
-            'password' => 'rahasia'
+            'username' => 'required',
+            'password' => 'required'
          ];
          $data = request()->validate($rules);
          // $data manipulation
