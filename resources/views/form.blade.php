@@ -19,8 +19,14 @@
 
   <form action="/form" method="post">
     @csrf
-    <label>Username : <input type="text" name="username"></label><br>
-    <label>Password : <input type="password" name="password"></label><br>
+    <label> 
+      Username : @error('username') {{$message}} @enderror
+      <input type="text" name="username">
+    </label><br>
+    <label> 
+      Password : @error('password') {{$message}} @enderror
+      <input type="password" name="password">
+    </label><br>
     <input type="submit" value="Login">
   </form>
 
