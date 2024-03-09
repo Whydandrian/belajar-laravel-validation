@@ -8,13 +8,21 @@ use Tests\TestCase;
 
 class FormControllerTest extends TestCase
 {
-   /**
-    * A basic feature test example.
-    */
-   public function test_example(): void
+   public function testLoginFailed()
    {
-      $response = $this->get('/');
+      $response = $this->post('/form/login', [
+         'username' => '',
+         'password' => '',
+      ]);
+      $response->assertStatus(400);
+   }
 
+   public function testLoginSuccess()
+   {
+      $response = $this->post('/form/login', [
+         'username' => 'admin',
+         'password' => 'admin',
+      ]);
       $response->assertStatus(200);
    }
 }
