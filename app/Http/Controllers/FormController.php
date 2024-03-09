@@ -19,7 +19,7 @@ class FormController extends Controller
    public function submitForm(LoginRequest $request): Response
    {
       $data = $request->validated();
-      Log::info(json_encode($data, JSON_PRETTY_PRINT));
+      Log::info(json_encode($request->all(), JSON_PRETTY_PRINT));
       return response('OK', Response::HTTP_OK);
    }
 
