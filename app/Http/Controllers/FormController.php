@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -14,12 +15,9 @@ class FormController extends Controller
       return response()->view('form');
    }
 
-   public function submitForm(Request $request): Response
+   public function submitForm(LoginRequest $request): Response
    {
-      $data = $request->validate([
-         'username'=> 'required',
-         'password'=> 'required',
-      ]);
+      $data = $request->validated();
       return response('OK', Response::HTTP_OK);
    }
 
